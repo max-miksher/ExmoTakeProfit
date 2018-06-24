@@ -66,8 +66,6 @@ namespace ExmoTakeProfit
              * запись задния в файл
              */
 
-
-
             /*
              * Список сделок по валютной паре
              */
@@ -90,18 +88,7 @@ namespace ExmoTakeProfit
         }
 
 
-        /* служебные функции для осуществления запросов к бирже */
-        public async Task<string> ApiQueryAsync(string apiName, IDictionary<string, string> req)
-        {
-            using (var client = new HttpClient())
-            {
-
-                var content = new FormUrlEncodedContent(req);
-                var response = await client.PostAsync(string.Format(_url, apiName), content);
-
-                return await response.Content.ReadAsStringAsync();
-            }
-        }
+       
 
         private void ThreadProcSafe(string _url, string apiName)
         {
