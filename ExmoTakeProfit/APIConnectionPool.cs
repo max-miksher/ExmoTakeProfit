@@ -16,9 +16,15 @@ namespace ExmoTakeProfit
     class APIConnectionPool
     {
         /// <summary>
+        /// максимально количество запросов в минуту
+        /// </summary>
+        private int countRequestToMin = 0;
+
+        /// <summary>
         ////переменная патерна одиночка
         /// </summary>
         private static APIConnectionPool instance;
+
         /// <summary>
         /// метод, реализующик патерн одиночка
         /// </summary>
@@ -39,7 +45,7 @@ namespace ExmoTakeProfit
         }
 
         /// <summary>
-        /// служебные функции для осуществления запросов к бирже 
+        /// служебные функции для осуществления запросов к бирже без авторзации
         /// </summary>
         public async Task<string> ApiQueryAsync(string apiName, IDictionary<string, string> req)
         {
@@ -51,6 +57,15 @@ namespace ExmoTakeProfit
 
                 return await response.Content.ReadAsStringAsync();
             }
+        }
+
+        /// <summary>
+        /// метод добавления запросов к бирже, которым требуется авторизация
+        /// </summary>
+        /// <returns></returns>
+        public string AuthorizationRequest()
+        {
+            return "";
         }
 
         /* сделали запрос */
