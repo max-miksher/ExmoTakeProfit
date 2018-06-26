@@ -21,33 +21,59 @@ namespace ExmoTakeProfit
         private int countRequestToMin = 0;
 
         /// <summary>
-        ////переменная патерна одиночка
+        /// переменная патерна одиночка
         /// </summary>
         private static APIConnectionPool instance;
 
         /// <summary>
         /// метод, реализующик патерн одиночка
         /// </summary>
+        /// <param name="countRequestToMin">максимальное количество запросов в минуту</param>
         /// <returns></returns>
-        public static APIConnectionPool getInstance()
+        public static APIConnectionPool getInstance(int countRequestToMin)
         {
             if (instance == null)
-                instance = new APIConnectionPool();
+                instance = new APIConnectionPool(countRequestToMin);
             return instance;
         }
 
         /// <summary>
         /// конструктор класса
         /// </summary>
-        private APIConnectionPool()
+        private APIConnectionPool(int countRequestToMin)
         {
+            this.countRequestToMin = countRequestToMin;
+        }
 
+        /// <summary>
+        /// Ставит в очередь запрос к бирже
+        /// </summary>
+        /// <param name="pairCoin">Валютная пара</param>
+        /// <param name="typeQuery">Наименование метода</param>
+        /// <returns>string</returns>
+        public string Request(string pairCoin, int typeQuery)
+        {
+            return "";
+        }
+
+        /// <summary>
+        /// Ставит в очередь запрос к бирже на торговлю
+        /// </summary>
+        /// <param name="pairCoin">Валютная пара</param>
+        /// <param name="typeQuery">Наименование метода</param>
+        /// <param name="quantity">Кол-во по ордеру</param>
+        /// <param name="price">Цена по ордеру</param>
+        /// <param name="type">Тип ордера, может принимать следующие значения</param>
+        /// <returns></returns>
+        public string Request(string pairCoin, int typeQuery, double quantity, double price, int type)
+        {
+            return "";
         }
 
         /// <summary>
         /// служебные функции для осуществления запросов к бирже без авторзации
         /// </summary>
-        public async Task<string> ApiQueryAsync(string apiName, IDictionary<string, string> req)
+        private async Task<string> ApiQueryAsync(string apiName, IDictionary<string, string> req)
         {
             using (var client = new HttpClient())
             {
