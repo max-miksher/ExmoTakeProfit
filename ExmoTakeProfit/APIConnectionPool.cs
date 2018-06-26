@@ -16,17 +16,22 @@ namespace ExmoTakeProfit
     class APIConnectionPool
     {
         /// <summary>
-        /// максимально количество запросов в минуту
+        /// Максимально количество запросов в минуту
         /// </summary>
         private int countRequestToMin = 0;
 
         /// <summary>
-        /// переменная патерна одиночка
+        /// Список наименований методов обращений к бирже
+        /// </summary>
+        private Dictionary<int, string> listQueryTypes = new Dictionary<int, string>();
+
+        /// <summary>
+        /// Переменная патерна одиночка
         /// </summary>
         private static APIConnectionPool instance;
 
         /// <summary>
-        /// метод, реализующик патерн одиночка
+        /// Метод, реализующик патерн одиночка
         /// </summary>
         /// <param name="countRequestToMin">максимальное количество запросов в минуту</param>
         /// <returns></returns>
