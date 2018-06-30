@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace ExmoTakeProfit
 {
@@ -31,6 +32,11 @@ namespace ExmoTakeProfit
         private static APIConnectionPool instance;
 
         /// <summary>
+        /// переменная таймера, который будет вызывать метод запросов к бирже
+        /// </summary>
+        private Timer timerRequest = new Timer();
+
+        /// <summary>
         /// Метод, реализующик патерн одиночка
         /// </summary>
         /// <param name="countRequestToMin">максимальное количество запросов в минуту</param>
@@ -48,6 +54,12 @@ namespace ExmoTakeProfit
         private APIConnectionPool(int countRequestToMin)
         {
             this.countRequestToMin = countRequestToMin;
+
+            /* опишем таймер запросов */
+            timerRequest.Interval = 500;
+            timerRequest.Enabled = true;
+            timerRequest.AutoReset = true;
+            timerRequest.Elapsed += RequestInLine;
         }
 
         /// <summary>
@@ -73,6 +85,16 @@ namespace ExmoTakeProfit
         public string Request(string pairCoin, int typeQuery, double quantity, double price, int type)
         {
             return "";
+        }
+
+        /// <summary>
+        /// Служебный метод, который выполняет запросы к бирже согласно очереди запросов.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        private void RequestInLine(Object source, ElapsedEventArgs e)
+        {
+
         }
 
         /// <summary>
