@@ -27,6 +27,11 @@ namespace ExmoTakeProfit
         private Dictionary<int, string> listQueryTypes = new Dictionary<int, string>();
 
         /// <summary>
+        /// Список адресов обращений к бирже
+        /// </summary>
+        private Dictionary<int, string> listQueryUrls = new Dictionary<int, string>();
+
+        /// <summary>
         /// Переменная патерна одиночка
         /// </summary>
         private static APIConnectionPool instance;
@@ -56,10 +61,31 @@ namespace ExmoTakeProfit
             this.countRequestToMin = countRequestToMin;
 
             /* опишем таймер запросов */
-            timerRequest.Interval = 500;
-            timerRequest.Enabled = true;
-            timerRequest.AutoReset = true;
-            timerRequest.Elapsed += RequestInLine;
+            this.timerRequest.Interval = 500;
+            this.timerRequest.Enabled = true;
+            this.timerRequest.AutoReset = true;
+            this.timerRequest.Elapsed += RequestInLine;
+
+            /* опишем наименования методов и адреса */
+            //Список сделок по валютной паре
+            this.listQueryTypes.Add(0, "trades");
+            this.listQueryUrls.Add(0, "https://api.exmo.com/v1/trades/?pair=");
+
+            //Книга ордеров по валютной паре
+            this.listQueryTypes.Add(1, "order_book");
+            this.listQueryUrls.Add(1, "https://api.exmo.com/v1/order_book/?limit=1000&pair=");
+
+            //Cтатистика цен и объемов торгов по валютным парам
+            this.listQueryTypes.Add(2, "ticker");
+            this.listQueryUrls.Add(2, "https://api.exmo.com/v1/ticker/");
+
+            //Настройки валютных пар
+            this.listQueryTypes.Add(3, "pair_settings");
+            this.listQueryUrls.Add(3, "https://api.exmo.com/v1/pair_settings/");
+
+            //Настройки валютных пар
+            this.listQueryTypes.Add(4, "currency");
+            this.listQueryUrls.Add(4, "https://api.exmo.com/v1/currency/");
         }
 
         /// <summary>
